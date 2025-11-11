@@ -1,0 +1,14 @@
+line-length = 100
+target-version = "py311"
+
+[lint]
+select = [
+  "E", "F", "I", # pycodestyle/pyflakes/import sort
+  "B",            # flake8-bugbear
+]
+ignore = [
+]
+
+[lint.isort]
+combine-as-imports = true
+force-sort-within-sections = true

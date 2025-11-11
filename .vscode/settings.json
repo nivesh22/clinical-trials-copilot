@@ -1,0 +1,21 @@
+{
+  // Auto-activate Conda env "ctc" in the integrated terminal (Windows PowerShell)
+  "python.terminal.activateEnvironment": true,
+  "terminal.integrated.profiles.windows": {
+    "PowerShell (Conda ctc)": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell",
+      "args": [
+        "-NoExit",
+        "-Command",
+        "conda activate ctc"
+      ]
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "PowerShell (Conda ctc)",
+
+  // Keep VS Code Python extension from prompting when terminal opens
+  "python.showStartPage": false,
+  "python.analysis.autoImportCompletions": true
+}
+

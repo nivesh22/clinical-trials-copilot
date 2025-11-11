@@ -1,0 +1,16 @@
+# Next.js
+.next/
+out/
+node_modules/
+.turbo/
+.vercel/
+
+# Testing
+coverage/
+playwright-report/
+test-results/
+
+# Env
+.env.local
+.env.*.local
+

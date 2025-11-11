@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ctc-ui
+  namespace: trials
+spec:
+  type: ClusterIP
+  selector:
+    app: ctc-ui
+  ports:
+    - port: 3000
+      targetPort: 3000
+

@@ -188,6 +188,52 @@ cython_debug/
 #  you could uncomment the following to ignore the entire vscode folder
 # .vscode/
 
+# Node / Next.js (UI)
+node_modules/
+.next/
+.turbo/
+.vercel/
+coverage/
+pnpm-lock.yaml
+yarn-error.log
+npm-debug.log*
+
+# UI route-level artifacts
+ui/node_modules/
+ui/.next/
+ui/.turbo/
+ui/.vercel/
+ui/coverage/
+ui/playwright-report/
+ui/test-results/
+
+# Env files (root and UI)
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+ui/.env.local
+ui/.env.development.local
+ui/.env.test.local
+ui/.env.production.local
+
+# Docker
+*.pid
+*.seed
+
+# Airflow
+airflow/logs/
+airflow/__pycache__/
+
+# Project outputs
+test-results/
+playwright-report/
+reports/
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
 # Ruff stuff:
 .ruff_cache/
 

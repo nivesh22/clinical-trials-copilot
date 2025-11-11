@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctc-ui
+  namespace: trials
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ctc-ui
+  template:
+    metadata:
+      labels:
+        app: ctc-ui
+    spec:
+      containers:
+        - name: ui
+          image: ctc-ui:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+          env:
+            - name: API_BASE
+              value: "http://ctc-api.trials.svc.cluster.local:8000"
+            - name: NEXT_PUBLIC_APP_NAME
+              value: "Clinical Trials Copilot"
+

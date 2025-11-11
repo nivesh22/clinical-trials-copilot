@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctc-api
+  namespace: trials
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ctc-api
+  template:
+    metadata:
+      labels:
+        app: ctc-api
+    spec:
+      containers:
+        - name: api
+          image: ctc-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: LLM_MODEL
+              value: "llama3.1:8b"
+            - name: EMBED_MODEL
+              value: "sentence-transformers/all-MiniLM-L6-v2"
+            - name: INDEX_DIR
+              value: "/var/index"
+          volumeMounts:
+            - name: index
+              mountPath: /var/index
+      volumes:
+        - name: index
+          emptyDir: {}
+

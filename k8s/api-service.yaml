@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ctc-api
+  namespace: trials
+spec:
+  type: ClusterIP
+  selector:
+    app: ctc-api
+  ports:
+    - port: 8000
+      targetPort: 8000
+

@@ -1,0 +1,6 @@
+FROM apache/airflow:2.9.2-python3.11
+USER root
+RUN mkdir -p /opt/airflow/dags
+USER airflow
+COPY airflow/dags /opt/airflow/dags
+
