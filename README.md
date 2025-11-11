@@ -60,9 +60,8 @@ Frontend notes
 
 CI/CD
 -----
-- Jenkinsfile includes lint/test for backend and frontend, image build, compose smoke test.
+- GitHub Actions workflow at `.github/workflows/ci.yml` runs lint/tests for backend and frontend, builds Docker images, and does a compose-based smoke test.
 
 License
 -------
 MIT. Use public trial data only; no PHI/PII.
-

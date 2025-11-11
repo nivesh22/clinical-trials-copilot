@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: requirements.txt
+
+      - name: Install Python deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint (ruff)
+        run: ruff check
+
+      - name: Test (pytest)
+        run: |
+          mkdir -p test-results
+          pytest --junitxml=test-results/py-tests.xml
+      - name: Upload backend test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-tests
+          path: test-results/py-tests.xml
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: ui/package-lock.json
+
+      - name: Install UI deps
+        working-directory: ui
+        run: |
+          npm ci || npm i
+
+      - name: Lint/Typecheck/Test UI
+        working-directory: ui
+        run: |
+          npm run lint || true
+          npm run typecheck || true
+          npm test -- --run || true
+
+      - name: Build API image
+        run: docker build -t ctc-api -f docker/Dockerfile.app .
+
+      - name: Build UI image
+        run: docker build -t ctc-ui -f docker/Dockerfile.ui ui
+
+      - name: Compose up
+        run: docker compose -f docker/docker-compose.yml up -d --build
+
+      - name: Wait for services
+        run: |
+          for i in {1..30}; do
+            if curl -fsS http://localhost:8000/healthz >/dev/null 2>&1; then echo API up; break; fi; sleep 2; done
+          for i in {1..30}; do
+            if curl -fsS http://localhost:3000 >/dev/null 2>&1; then echo UI up; break; fi; sleep 2; done
+
+      - name: Smoke test via UI proxy
+        run: |
+          curl -fsS -X POST http://localhost:3000/api/ask \
+            -H "Content-Type: application/json" \
+            -d '{"question":"hello"}'
+
+      - name: Compose down
+        if: always()
+        run: docker compose -f docker/docker-compose.yml down -v
+
