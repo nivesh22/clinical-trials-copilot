@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from typing import List, Literal, Optional
+from typing import List, Literal
+
 from pydantic import BaseModel, Field
 
 
@@ -30,4 +31,3 @@ class MetaResponse(BaseModel):
     embed_model: str
     llm_model: str
     index_size: int
-

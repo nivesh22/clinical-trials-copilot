@@ -6,7 +6,6 @@ import requests
 
 from app.config import settings
 
-
 Fields = List[str]
 
 

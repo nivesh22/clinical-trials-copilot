@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
-from app.main import app
 
+from app.main import app
 
 client = TestClient(app)
 
@@ -25,4 +25,3 @@ def test_ask():
     assert isinstance(body.get("answer"), str)
     assert len(body.get("sources", [])) >= 1
     assert body.get("meta", {}).get("retrieved_k") >= 1
-

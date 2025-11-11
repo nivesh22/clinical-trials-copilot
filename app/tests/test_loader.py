@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from typing import Any
 
-import json
-
 from app.rag.loader import fetch_trials, load_and_chunk
 
 
@@ -90,4 +88,3 @@ def test_load_and_chunk(monkeypatch):
     # Expect multiple chunks due to small max_tokens
     assert len(chunks) >= 2
     assert all("nct_id" in c and "tag" in c and "text" in c for c in chunks)
-

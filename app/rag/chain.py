@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import time
-from typing import Dict, List
+from typing import List
 
 from app.config import settings
 from app.models.io import AskMeta, AskResponse, Source
@@ -42,4 +42,3 @@ def stream_tokens(question: str, retrieved_k: int = 3):
         yield {"type": "token", "data": word + " "}
         time.sleep(0.02)
     yield {"type": "done", "data": resp.model_dump()}
-

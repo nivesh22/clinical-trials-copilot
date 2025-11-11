@@ -31,7 +31,7 @@ jobs:
       - name: Test (pytest)
         run: |
           mkdir -p test-results
-          pytest --junitxml=test-results/py-tests.xml
+          PYTHONPATH=. pytest --junitxml=test-results/py-tests.xml
       - name: Upload backend test results
         if: always()
         uses: actions/upload-artifact@v4
@@ -83,4 +83,3 @@ jobs:
       - name: Compose down
         if: always()
         run: docker compose -f docker/docker-compose.yml down -v
-
